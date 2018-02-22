@@ -8,7 +8,8 @@ var fft;
 var w;
 var vect;
 var min;
-// var count = 0;
+var count = 0;
+var g = 0;
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
@@ -31,8 +32,10 @@ function draw() {
     background(255);
     playNote();
     updateNote();
-    oneSort(shuffledIndex);
-
+    if (count % 29 == 0){
+      oneSort(shuffledIndex);
+    };
+    count++;
     var spectrum = fft.analyze();
     for (var i = 0; i < spectrum.length; i++){
         var angle = map(i, 0, spectrum.length, 0, 360);
@@ -74,19 +77,24 @@ function swap(array, i, j) {
 }
 
 function oneSort(array) {
-  for(var i = 0; i < array.length; i++) {
-    var min = i;
-    for(var j = i + 1; j < array.length; j++) {
+  // for(var i = 0; i < array.length; i++) {
+    if (g < array.length){
+    var min = g;
+    for(var j = g + 1; j < array.length; j++) {
       if(array[j] < array[min]) {
         min = j;
-        break
+        // break;
       }
     }
-    if(i !== min) {
-      swap(array, i, min);
-      break
+    if(g !== min) {
+      swap(array, g, min);
+      // break;
     }
 
   }
+  if (g == array.lenth){
+    g = 0;
+  }
+  g++;
   return array;
 }
